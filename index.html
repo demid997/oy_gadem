@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b16">
+  <title>ENGLISH LESSONS — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loginView" class="login-wrap">
+    <div class="login-card">
+      <div class="brand-mark">E<span>L</span></div>
+      <div class="eyebrow">ENGLISH LESSONS</div>
+      <h1>С возвращением</h1>
+      <p class="muted">Войдите в панель управления занятиями</p>
+      <form id="loginForm">
+        <label>Email<input id="email" type="email" placeholder="admin@example.com" autocomplete="username" required></label>
+        <label>Пароль<input id="password" type="password" placeholder="Ваш пароль" autocomplete="current-password" required></label>
+        <button class="primary wide" type="submit">Войти в систему <span>→</span></button>
+        <div id="loginError" class="error"></div>
+      </form>
+      <div class="login-foot">Защищённый доступ преподавателя</div>
+    </div>
+    <div class="login-glow"></div>
+  </div>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark small">E<span>L</span></div><div><b>ENGLISH</b><small>LESSONS / ADMIN</small></div></div>
+      <div class="side-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <nav id="nav">
+        <button class="nav-item active" data-page="overview"><span>◫</span> Обзор</button>
+        <button class="nav-item" data-page="schedule"><span>▦</span> Расписание</button>
+        <button class="nav-item" data-page="students"><span>♙</span> Ученики</button>
+        <button class="nav-item" data-page="history"><span>◷</span> История занятий</button>
+        <button class="nav-item" data-page="requests"><span>↗</span> Запросы на перенос <i id="requestBadge" class="nav-badge hidden">0</i></button>
+        <button class="nav-item" data-page="reports"><span>▥</span> Статистика</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="online"><i></i> Система готова</div>
+        <button id="logoutBtn" class="logout">↪ Выйти из аккаунта</button>
+        <div class="version">ENGLISH LESSONS · ADMIN 1.0</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="mobile-brand">ENGLISH LESSONS</div>
+        <div class="breadcrumb">Рабочее пространство <span>/</span> <b id="pageCrumb">Обзор</b></div>
+        <div class="top-actions"><div class="today-chip" id="todayLabel"></div><div class="avatar">А</div></div>
+      </header>
+      <section class="content">
+        <div id="page-overview" class="page">
+          <div class="page-heading"><div><div class="eyebrow">ВАШ ЦЕНТР УПРАВЛЕНИЯ</div><h1>Добро пожаловать! <span class="wave">✦</span></h1><p>Вот что происходит с вашими занятиями.</p></div><button class="primary" id="quickAdd">＋ Новое занятие</button></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Занятий сегодня</span><span class="stat-icon violet">◷</span></div><strong id="todayCount">0</strong><small>По выбранной дате</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Всего учеников</span><span class="stat-icon blue">♙</span></div><strong id="studentCount">0</strong><small>В вашей базе</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Проведено уроков</span><span class="stat-icon green">✓</span></div><strong id="completedCount">0</strong><small>За всё время</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Запросы на перенос</span><span class="stat-icon orange">↗</span></div><strong id="pendingCount">0</strong><small>Ожидают решения</small></article>
+          </div>
+          <div class="section-row"><div><h2>Ближайшие занятия</h2><p>Ваше расписание на сегодня</p></div><button class="text-btn" data-goto="schedule">Открыть расписание →</button></div>
+          <div class="panel"><div id="upcomingList" class="upcoming-list empty-state">Пока нет запланированных занятий. Добавьте первое занятие.</div></div>
+          <div class="section-row"><div><h2>Быстрые действия</h2><p>Самые частые операции</p></div></div>
+          <div class="quick-grid">
+            <button class="quick-card" id="quickStudent"><span class="quick-icon">♙</span><b>Добавить ученика</b><small>Создать карточку ученика</small><span class="quick-arrow">↗</span></button>
+            <button class="quick-card" data-goto="schedule"><span class="quick-icon">▦</span><b>Открыть расписание</b><small>Управлять занятиями</small><span class="quick-arrow">↗</span></button>
+            <button class="quick-card" data-goto="reports"><span class="quick-icon">▥</span><b>Посмотреть статистику</b><small>Уроки за выбранный период</small><span class="quick-arrow">↗</span></button>
+          </div>
+        </div>
+
+        <div id="page-schedule" class="page hidden">
+          <div class="page-heading"><div><div class="eyebrow">ПЛАНИРОВАНИЕ</div><h1>Расписание</h1><p>Управляйте временем и занятиями учеников.</p></div><button class="primary" id="addLesson">＋ Добавить занятие</button></div>
+          <div class="toolbar panel"><div class="date-controls"><button id="prevDay" class="icon-btn">‹</button><input id="scheduleDate" type="date"><button id="nextDay" class="icon-btn">›</button><button id="todayBtn" class="soft-btn">Сегодня</button></div><div class="legend"><span><i class="dot violet-dot"></i> Запланировано</span><span><i class="dot green-dot"></i> Проведено</span></div></div>
+          <div class="panel calendar-panel"><div class="calendar-title"><div><h2 id="calendarDayTitle">Расписание дня</h2><p>Нажмите на свободное время, чтобы добавить урок</p></div><span class="timezone">Ваше местное время</span></div><div id="dayGrid" class="day-grid"></div></div>
+        </div>
+
+        <div id="page-students" class="page hidden">
+          <div class="page-heading"><div><div class="eyebrow">ВАША БАЗА</div><h1>Ученики</h1><p>Карточки и учёт занятий каждого ученика.</p></div><button class="primary" id="addStudent">＋ Добавить ученика</button></div>
+          <div class="panel table-panel"><div class="table-tools"><input id="studentSearch" class="search" placeholder="⌕  Поиск по имени или email"><span id="studentTotal" class="muted"></span></div><div class="table-scroll"><table><thead><tr><th>УЧЕНИК</th><th>EMAIL</th><th>ПРОВЕДЕНО УРОКОВ</th><th>ДЕЙСТВИЯ</th></tr></thead><tbody id="studentsTable"></tbody></table></div><div id="studentsEmpty" class="empty-state hidden">Ученики ещё не добавлены.</div></div>
+        </div>
+
+        <div id="page-history" class="page hidden">
+          <div class="page-heading"><div><div class="eyebrow">ЖУРНАЛ</div><h1>История занятий</h1><p>Все уроки и их статусы.</p></div></div>
+          <div class="panel table-panel"><div class="table-tools"><div class="date-controls"><label>С даты<input id="historyFrom" type="date"></label><label>По дату<input id="historyTo" type="date"></label></div><button id="filterHistory" class="soft-btn">Применить</button></div><div class="table-scroll"><table><thead><tr><th>ДАТА И ВРЕМЯ</th><th>УЧЕНИК</th><th>СТАТУС</th><th>КОММЕНТАРИЙ</th></tr></thead><tbody id="historyTable"></tbody></table></div></div>
+        </div>
+
+        <div id="page-requests" class="page hidden">
+          <div class="page-heading"><div><div class="eyebrow">ОБРАТНАЯ СВЯЗЬ</div><h1>Запросы на перенос</h1><p>Заявки учеников на изменение времени занятий.</p></div></div>
+          <div id="requestsList" class="request-list panel empty-state">Новых запросов пока нет.</div>
+        </div>
+
+        <div id="page-reports" class="page hidden">
+          <div class="page-heading"><div><div class="eyebrow">АНАЛИТИКА</div><h1>Статистика</h1><p>Сколько занятий прошло за выбранный период.</p></div></div>
+          <div class="panel report-filter"><label>Начало периода<input id="reportFrom" type="date"></label><label>Конец периода<input id="reportTo" type="date"></label><button id="runReport" class="primary">Показать результат</button></div>
+          <div class="stats-grid report-stats"><article class="stat-card"><div class="stat-top"><span>Проведено уроков</span><span class="stat-icon green">✓</span></div><strong id="reportCompleted">0</strong></article><article class="stat-card"><div class="stat-top"><span>Запланировано</span><span class="stat-icon violet">◷</span></div><strong id="reportPlanned">0</strong></article><article class="stat-card"><div class="stat-top"><span>Учеников занималось</span><span class="stat-icon blue">♙</span></div><strong id="reportStudents">0</strong></article></div>
+          <div class="panel table-panel"><div class="panel-heading"><h2>Занятия по ученикам</h2></div><div class="table-scroll"><table><thead><tr><th>УЧЕНИК</th><th>ПРОВЕДЕНО УРОКОВ</th><th>ЗАПЛАНИРОВАНО</th></tr></thead><tbody id="reportTable"></tbody></table></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden">
+    <div class="modal" role="dialog" aria-modal="true"><div class="modal-head"><div><div class="eyebrow" id="modalEyebrow">НОВАЯ ЗАПИСЬ</div><h2 id="modalTitle">Добавить занятие</h2></div><button class="icon-btn" id="closeModal">×</button></div><form id="lessonForm">
+      <input id="lessonId" type="hidden">
+      <label>Ученик<select id="lessonStudent" required><option value="">Выберите ученика</option></select></label>
+      <div class="form-row"><label>Дата<input id="lessonDate" type="date" required></label><label>Время<input id="lessonTime" type="time" required></label></div>
+      <div class="form-row"><label>Длительность<select id="lessonDuration"><option value="45">45 минут</option><option value="60" selected>60 минут</option><option value="90">90 минут</option></select></label><label>Статус<select id="lessonStatus"><option value="planned">Запланировано</option><option value="completed">Проведено</option><option value="cancelled">Отменено</option><option value="missed">Пропуск</option></select></label></div>
+      <label>Комментарий<textarea id="lessonNote" rows="3" placeholder="Например: Unit 4, speaking practice"></textarea></label>
+      <div id="modalError" class="error"></div><div class="modal-actions"><button type="button" class="soft-btn" id="deleteLesson">Удалить</button><button type="button" class="soft-btn" id="cancelModal">Отмена</button><button type="submit" class="primary">Сохранить</button></div>
+    </form></div>
+  </div>
+
+  <div id="studentBackdrop" class="modal-backdrop hidden"><div class="modal"><div class="modal-head"><div><div class="eyebrow">УЧЕНИК</div><h2 id="studentModalTitle">Новый ученик</h2></div><button class="icon-btn" id="closeStudentModal">×</button></div><form id="studentForm"><input id="studentId" type="hidden"><label>Имя ученика<input id="studentName" required maxlength="80" placeholder="Например, Александр"></label><label>Email ученика<input id="studentEmail" type="email" maxlength="120" placeholder="student@example.com"></label><label>Заметка<textarea id="studentNote" rows="3" placeholder="Дополнительная информация"></textarea></label><p class="hint">Создание логина и пароля для ученика подключим через защищённую серверную функцию Firebase.</p><div class="modal-actions"><button type="button" class="soft-btn" id="cancelStudent">Отмена</button><button type="submit" class="primary">Сохранить ученика</button></div><div id="studentError" class="error"></div></form></div></div>
+  <div id="toast" class="toast"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
